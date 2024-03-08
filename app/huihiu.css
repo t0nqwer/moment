@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  overflow: hidden;
+  background: #131415;
+
+  color: #131415;
+  position: relative;
+  height: 100dvh;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .profile-info-div {
+    @apply w-1/3 text-center py-2 flex flex-col items-center justify-center;
+  }
+  .sideNavList {
+    @apply flex flex-col justify-center pl-7 py-5 w-full transition hover:bg-mindaro-500;
+  }
+}

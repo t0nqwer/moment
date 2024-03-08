@@ -1,0 +1,43 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: "#DDFF8F",
+        secondary: {
+          100: "#E2E2D5",
+          200: "#888883",
+        },
+        mindaro: {
+          50: "#f9ffe5",
+          100: "#efffc8",
+          200: "#ddff8f",
+          300: "#c7fb5b",
+          400: "#aff229",
+          500: "#8fd80a",
+          600: "#6fad03",
+          700: "#538308",
+          800: "#44670d",
+          900: "#395710",
+          950: "#1c3102",
+        },
+
+        mainbg: "#1E1E1E",
+        secoundarybg: "#1A1B1C",
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+    },
+  },
+  plugins: [],
+};
+export default config;
