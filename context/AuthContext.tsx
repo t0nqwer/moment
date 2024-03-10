@@ -43,23 +43,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
 
     try {
-      const currentAccount = JSON.parse(
-        localStorage.getItem("currentAccount")!
-      );
-      if (currentAccount) {
-        setUser({
-          id: currentAccount.$id,
-          name: currentAccount.name,
-          username: currentAccount.username,
-          email: currentAccount.email,
-          imageUrl: currentAccount.imageUrl,
-          bio: currentAccount.bio,
-        });
-        setIsAuthenticated(true);
-
-        return true;
-      }
-
       return false;
     } catch (error) {
       console.error(error);

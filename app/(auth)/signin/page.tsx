@@ -18,7 +18,10 @@ import { SigninValidation } from "@/lib/validation";
 import Loader from "@/components/Loader";
 import Image from "next/image";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 const page = () => {
+  const router = useRouter();
   const isPending = false;
   const isUserLoading = false;
   const form = useForm<z.infer<typeof SigninValidation>>({
@@ -29,7 +32,20 @@ const page = () => {
     },
   });
   const handleSignin = async (user: z.infer<typeof SigninValidation>) => {
-    console.log(user);
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
+        email: user.email,
+        password: user.password,
+      });
+      router.push("/");
+    } catch (error) {
+      console.error("An error occurred while signing in the user.", error);
+      form.setError("email", {
+        type: "manual",
+        message: "An error occurred while signing in the user.",
+      });
+    }
   };
   return (
     <Form {...form}>

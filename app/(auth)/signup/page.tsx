@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import {
   Form,
   FormControl,
@@ -7,6 +8,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,7 +20,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 const page = () => {
+  const router = useRouter();
   const isCreateUser = false;
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
   const form = useForm<z.infer<typeof SignupValidation>>({
     resolver: zodResolver(SignupValidation),
     defaultValues: {
@@ -29,31 +34,41 @@ const page = () => {
     },
   });
   async function onSubmit(values: z.infer<typeof SignupValidation>) {
-    const resUserExists = await fetch("api/userExists", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: values.email }),
-    });
-    console.log(resUserExists);
-
-    const { user } = await resUserExists.json();
-    if (user) {
-      form.setError("email", {
-        type: "manual",
-        message: "Email already exists",
+    try {
+      const resUserExists = await fetch("api/userExists", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: values.email }),
       });
-      return;
+
+      const { user } = await resUserExists.json();
+      if (user) {
+        form.setError("email", {
+          type: "manual",
+          message: "Email already exists",
+        });
+        return;
+      }
+      const res = await fetch("api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        form.reset();
+
+        router.push("/");
+      } else {
+        console.log("User registration failed.");
+      }
+    } catch (error) {
+      console.log("Error during registration: ", error);
     }
-    // const res = await fetch("api/signup", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(values),
-    // });
-    // const data = await res.json();
   }
   return (
     <Form {...form}>

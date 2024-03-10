@@ -1,7 +1,7 @@
 import React from "react";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import { options } from "../api/auth/[...nextauth]/option";
+import { options } from "../api/auth/[...nextauth]/authOptions";
 import "./globals.css";
 import { Nunito_Sans } from "next/font/google";
 import { Metadata } from "next";

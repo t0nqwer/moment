@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { sidebarLinks } from "@/utils/constants";
-
 import { getServerSession } from "next-auth";
-import { options } from "@/app/api/auth/[...nextauth]/option";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 const SideNavebar = async () => {
-  const session = await getServerSession(options);
+  const session = await getServerSession(authOptions);
+  console.log(session);
+
   return (
     <div className=" w-64 px-5 py-10 h-full flex-col flex min-w-[270px]">
       {session && (
@@ -58,7 +59,10 @@ const SideNavebar = async () => {
         </ul>
         <div className=" ">
           {session ? (
-            <button className="sideNavList ">
+            <Link
+              className="sideNavList "
+              href="/api/auth/signout?callbackUrl=/"
+            >
               <div className=" flex items-center transition hover:bg-mindaro-500">
                 <Image
                   src="/icons/logout.svg"
@@ -68,7 +72,7 @@ const SideNavebar = async () => {
                 />
                 <span className="text-white  ml-2">Logout</span>
               </div>
-            </button>
+            </Link>
           ) : (
             <Link href={"/signin"} className=" sideNavList">
               <div className=" flex items-center transition hover:bg-mindaro-500">

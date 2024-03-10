@@ -6,8 +6,8 @@ import "./globals.css";
 import type { AppProps } from "next/app";
 import Provider from "../(components)/Provider";
 import { AuthProvider } from "@/context/AuthContext";
-import { options } from "../api/auth/[...nextauth]/option";
-import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/authOptions";
+// import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 const inter = Nunito_Sans({ subsets: ["latin"] });
@@ -22,20 +22,20 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession(options);
-  if (!session) redirect("/signin");
+  // const session = await getServerSession(options);
+  // if (!session) redirect("/signin");
   return (
     <html lang="en">
       {/* <SessionProvider> */}
       <Provider>
-        {/* <AuthProvider> */}
-        <body className={inter.className}>
-          <div className="flex h-full grow-0">
-            <SideNavebar />
-            {children}
-          </div>
-        </body>
-        {/* </AuthProvider> */}
+        <AuthProvider>
+          <body className={inter.className}>
+            <div className="flex h-full grow-0">
+              <SideNavebar />
+              {children}
+            </div>
+          </body>
+        </AuthProvider>
       </Provider>
       {/* </SessionProvider> */}
     </html>
