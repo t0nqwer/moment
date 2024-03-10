@@ -28,14 +28,36 @@ const page = () => {
       password: "",
     },
   });
-  function onSubmit(values: z.infer<typeof SignupValidation>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof SignupValidation>) {
+    const resUserExists = await fetch("api/userExists", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: values.email }),
+    });
+    console.log(resUserExists);
+
+    const { user } = await resUserExists.json();
+    if (user) {
+      form.setError("email", {
+        type: "manual",
+        message: "Email already exists",
+      });
+      return;
+    }
+    // const res = await fetch("api/signup", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(values),
+    // });
+    // const data = await res.json();
   }
   return (
     <Form {...form}>
-      <div className="flex-col sm:w-420 flex-center">
+      <div className="flex-col sm:w-420 flex-center text-white">
         <div className=" w-full flex justify-center">
           <Image src="/logo.svg" alt="logo" width={100} height={100} />
         </div>

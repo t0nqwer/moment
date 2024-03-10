@@ -28,7 +28,9 @@ const page = () => {
       password: "",
     },
   });
-  const handleSignin = async (user: z.infer<typeof SigninValidation>) => {};
+  const handleSignin = async (user: z.infer<typeof SigninValidation>) => {
+    console.log(user);
+  };
   return (
     <Form {...form}>
       <div className="flex-col sm:w-420 flex-center">
