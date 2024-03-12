@@ -68,7 +68,7 @@ const config = {
         "light-4": "#5C5C7B",
         highlight: "#DDFF8F",
         mainbg: "#1E1E1E",
-        secoundarybg: "#1A1B1C",
+        secoundarybg: "#181a19",
         dark: "#121212",
         mindaro: {
           50: "#f9ffe5",

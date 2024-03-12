@@ -81,7 +81,7 @@
     @apply text-white !important;
   }
   .shad-input {
-    @apply h-12 bg-dark-4 border-none placeholder:text-light-4 focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3 !important;
+    @apply h-12 text-white bg-dark-4 border-none placeholder:text-light-4 focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3 !important;
   }
   .shad-button_primary {
     @apply bg-highlight hover:bg-highlight text-dark-3 flex gap-2 !important;

@@ -1,7 +1,7 @@
 import React from "react";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import { options } from "../api/auth/[...nextauth]/authOptions";
+import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 import "./globals.css";
 import { Nunito_Sans } from "next/font/google";
 import { Metadata } from "next";
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const RootLayout = async ({
   children,
 }: Readonly<{ children: React.ReactNode }>) => {
-  const isAuth = await getServerSession(options);
+  const isAuth = await getServerSession(authOptions);
   return isAuth ? (
     redirect("/")
   ) : (

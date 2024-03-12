@@ -23,4 +23,6 @@ const postSchema = new Schema({
   tag: Array,
 });
 
-export const Post = models.Post || model("Post", postSchema);
+const Post = models.Post || model("Post", postSchema);
+
+export default Post;
