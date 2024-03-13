@@ -15,6 +15,8 @@ export const authOptions: AuthOptions = {
         password: { type: "password", placeholder: "Pa$$w0rd" },
       },
       async authorize(credentials, req) {
+        console.log(credentials, "credentials from authorize");
+
         const { email, password } = SigninValidation.parse(credentials);
         await connectToDatabase();
         const user = await User.findOne({ email });

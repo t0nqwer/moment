@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 const SideNavebar = async () => {
   const session = await getServerSession(authOptions);
-  console.log(session);
+  console.log(session, "session");
 
   return (
     <div className=" w-64 px-5 py-10 h-full flex-col flex min-w-[270px]">
@@ -19,7 +19,9 @@ const SideNavebar = async () => {
               height={200}
               className="rounded-full  h-32 w-32 object-cover overflow-hidden  border-4 border-highlight "
             />
-            <h1 className="text-white  font-semibold mt-2">John Doe</h1>
+            <h1 className="text-white  font-semibold mt-2">
+              {session.user?.name}
+            </h1>
           </div>
           <div className=" w-full rounded-md bg-secoundarybg flex mt-5">
             <div className="profile-info-div">
