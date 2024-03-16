@@ -136,7 +136,7 @@
     @apply w-1/3 text-center py-2 flex flex-col items-center justify-center;
   }
   .sideNavList {
-    @apply flex flex-col justify-center pl-7 py-5 w-full transition hover:bg-mindaro-500;
+    @apply flex flex-col justify-center py-5 pl-7 w-full transition hover:bg-mindaro-500 select-none;
   }
   .h2-bold {
     @apply text-[30px] font-bold leading-[140%] tracking-tighter;

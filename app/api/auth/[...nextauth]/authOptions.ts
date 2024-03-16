@@ -27,17 +27,20 @@ export const authOptions: AuthOptions = {
 
         if (!isPasswordValid) return null;
         console.log(user);
-
-        return user;
+        const returndata = user._doc;
+        returndata.password = undefined;
+        return user._doc;
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
-      return token;
+      // const userdata = await User.findOne({ email: user.user.email });
+
+      return { ...token, ...user };
     },
     async session({ session, token }) {
-      return session;
+      return { ...session, ...token };
     },
   },
   pages: {

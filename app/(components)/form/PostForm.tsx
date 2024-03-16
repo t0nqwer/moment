@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useTransition } from "react";
 import {
   Form,
   FormControl,
@@ -18,6 +18,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { CreatePost } from "@/lib/actions/CreatePost";
+import { uploadimageFront, createPost } from "@/lib/actions/client";
+// import { useUserContext } from "@/context/AuthContext";
+import { useSession } from "next-auth/react";
 type PostFormProps = {
   post?: {
     caption: string;
@@ -29,6 +32,8 @@ type PostFormProps = {
 };
 
 const PostForm = ({ post, action }: PostFormProps) => {
+  const { data: user } = useSession();
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const form = useForm<z.infer<typeof PostValidation>>({
     resolver: zodResolver(PostValidation),
@@ -40,7 +45,9 @@ const PostForm = ({ post, action }: PostFormProps) => {
     },
   });
   const onSubmit = async (values: z.infer<typeof PostValidation>) => {
-    await CreatePost(values);
+    const ImageUrl = await uploadimageFront(values);
+    const data = { ...values, imageUrl: ImageUrl, user };
+    await createPost(data);
   };
 
   return (
@@ -73,7 +80,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
               <FormLabel className="shad-form_label">Caption</FormLabel>
               <FormControl>
                 <Textarea
-                  className="shad-textarea custom-scrollbar"
+                  className="shad-textarea custom-scrollbar text-off-white"
                   {...field}
                   placeholder="asdada"
                 />

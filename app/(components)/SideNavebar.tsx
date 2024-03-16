@@ -3,9 +3,11 @@ import Link from "next/link";
 import { sidebarLinks } from "@/utils/constants";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
+import SideBarDetailSection from "./SideBarDetailSection";
 const SideNavebar = async () => {
   const session = await getServerSession(authOptions);
-  console.log(session, "session");
+  console.log(session, "session nav");
+  const data: any = session;
 
   return (
     <div className=" w-64 px-5 py-10 h-full flex-col flex min-w-[270px]">
@@ -19,32 +21,20 @@ const SideNavebar = async () => {
               height={200}
               className="rounded-full  h-32 w-32 object-cover overflow-hidden  border-4 border-highlight "
             />
-            <h1 className="text-white  font-semibold mt-2">
-              {session.user?.name}
+            <h1 className="text-white text[17px]  font-semibold mt-2">
+              {data?.username}
             </h1>
+            <h1 className="text-white text-xs">{session.user?.name}</h1>
           </div>
-          <div className=" w-full rounded-md bg-secoundarybg flex mt-5">
-            <div className="profile-info-div">
-              <h1 className="text-white text-center text-[13px]">12</h1>
-              <p className="text-gray-400 text-center text-xs">Posts</p>
-            </div>
-            <div className="profile-info-div">
-              <h1 className="text-white text-center text-[13px]">12</h1>
-              <p className="text-gray-400 text-center  text-xs">Following</p>
-            </div>
-            <div className="profile-info-div">
-              <h1 className="text-white text-center text-[13px]">12</h1>
-              <p className="text-gray-400 text-center text-xs">Follower</p>
-            </div>
-          </div>
+          <SideBarDetailSection />
         </>
       )}
 
       <div className="w-full rounded-md bg-secoundarybg flex flex-col justify-between mt-5 h-full pb-5">
         <ul className=" flex flex-col w-full">
           {sidebarLinks.map((link) => (
-            <li key={link.label} className="sideNavList group">
-              <Link href={link.route}>
+            <li key={link.label}>
+              <Link href={link.route} className="sideNavList">
                 <div className="flex items-center ">
                   <Image
                     src={link.imgURL}

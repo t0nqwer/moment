@@ -3,7 +3,6 @@ import { Schema, model, models } from "mongoose";
 const postSchema = new Schema({
   image: {
     type: String,
-    required: true,
   },
   caption: {
     type: String,
@@ -13,6 +12,9 @@ const postSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
+  },
+  location: {
+    type: String,
   },
   likes: { type: Array, default: [] },
   comments: { type: Array, default: [] },
