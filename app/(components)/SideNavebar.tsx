@@ -6,16 +6,19 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import SideBarDetailSection from "./SideBarDetailSection";
 const SideNavebar = async () => {
   const session = await getServerSession(authOptions);
-  console.log(session, "session nav");
   const data: any = session;
 
   return (
-    <div className=" w-64 px-5 py-10 h-full flex-col flex min-w-[270px]">
+    <div className=" w-64 px-5 py-10 h-full flex-col  flex min-w-[270px]">
       {session && (
         <>
           <div className=" flex flex-col items-center px-5 ">
             <Image
-              src="/Demo/profile.jpg"
+              src={
+                session.user?.image
+                  ? session.user.image
+                  : `/icons/profile-placeholder.svg`
+              }
               alt="logo"
               width={200}
               height={200}
@@ -30,7 +33,11 @@ const SideNavebar = async () => {
         </>
       )}
 
-      <div className="w-full rounded-md bg-secoundarybg flex flex-col justify-between mt-5 h-full pb-5">
+      <div
+        className={`w-full rounded-md overflow-hidden bg-secoundarybg flex flex-col justify-between ${
+          session && "mt-5"
+        } h-full`}
+      >
         <ul className=" flex flex-col w-full">
           {sidebarLinks.map((link) => (
             <li key={link.label}>

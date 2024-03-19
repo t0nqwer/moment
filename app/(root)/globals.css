@@ -216,7 +216,7 @@
 
   /* Button */
   .shad-button_primary {
-    @apply bg-highlight hover:bg-highlight text-dark-3 flex gap-2 !important;
+    @apply bg-highlight disabled:bg-secoundarybg hover:bg-highlight text-dark-3 flex gap-2 !important;
   }
 
   .shad-button_dark_4 {

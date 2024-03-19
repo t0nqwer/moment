@@ -3,12 +3,12 @@ import { Inter, Nunito_Sans } from "next/font/google";
 import SideNavebar from "../(components)/SideNavebar";
 import "./globals.css";
 // import { SessionProvider } from "next-auth/react";
-import type { AppProps } from "next/app";
+// import type { AppProps } from "next/app";
 import Provider from "../(components)/Provider";
-import { AuthProvider } from "@/context/AuthContext";
-import { authOptions } from "../api/auth/[...nextauth]/authOptions";
+// import { AuthProvider } from "@/context/AuthContext";
+// import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 // import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 
 const inter = Nunito_Sans({ subsets: ["latin"] });
 
@@ -27,16 +27,15 @@ export default async function RootLayout({
   return (
     <html lang="en">
       {/* <SessionProvider> */}
-      <Provider>
-        <AuthProvider>
-          <body className={inter.className}>
-            <div className="flex h-full grow-0">
-              <SideNavebar />
-              {children}
-            </div>
-          </body>
-        </AuthProvider>
-      </Provider>
+      <body className={inter.className}>
+        <Provider>
+          <div className="flex h-full grow-0">
+            <SideNavebar />
+
+            {children}
+          </div>
+        </Provider>
+      </body>
       {/* </SessionProvider> */}
     </html>
   );

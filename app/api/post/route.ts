@@ -12,12 +12,20 @@ import {
   deleteObject,
 } from "firebase/storage";
 import { NextResponse, NextRequest } from "next/server";
+
 import Post from "@/utils/database/model/post";
 import User from "@/utils/database/model/user";
 export async function GET(req: NextRequest, res: NextResponse) {
+  const page: any = req.nextUrl.searchParams.get("page");
+
   try {
     await connectToDatabase();
-    const posts = await Post.find().populate("user", "username imageUrl");
+    const posts = await Post.find()
+      .populate("user")
+      .limit(2)
+      .skip(2 * (page - 1))
+      .sort({ createdAt: -1 });
+
     return NextResponse.json(posts);
   } catch (error) {
     console.log(error);
@@ -27,7 +35,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     await connectToDatabase();
     const data = await req.json();
-    console.log(data, "From CreatePost action");
 
     const imageOriginal = data.imageUrl;
     const storageRef = ref(storage, imageOriginal);
@@ -64,7 +71,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
       { image: url },
       { new: true }
     );
-    console.log(postUpdate, "From CreatePost action");
     await deleteObject(storageRef);
 
     return NextResponse.json({ message: "Post created successfully" });

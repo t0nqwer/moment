@@ -17,10 +17,10 @@ import FileUploader from "@/components/shared/FileUploader";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { CreatePost } from "@/lib/actions/CreatePost";
 import { uploadimageFront, createPost } from "@/lib/actions/client";
-// import { useUserContext } from "@/context/AuthContext";
 import { useSession } from "next-auth/react";
+import Loader from "@/components/shared/Loader";
+
 type PostFormProps = {
   post?: {
     caption: string;
@@ -45,9 +45,16 @@ const PostForm = ({ post, action }: PostFormProps) => {
     },
   });
   const onSubmit = async (values: z.infer<typeof PostValidation>) => {
-    const ImageUrl = await uploadimageFront(values);
-    const data = { ...values, imageUrl: ImageUrl, user };
-    await createPost(data);
+    startTransition(async () => {
+      if (action === "Create") {
+        const ImageUrl = await uploadimageFront(values);
+        const data = { ...values, imageUrl: ImageUrl, user };
+        await createPost(data);
+        form.reset();
+        router.push("/");
+        return;
+      }
+    });
   };
 
   return (
@@ -133,12 +140,13 @@ const PostForm = ({ post, action }: PostFormProps) => {
           </Button>
           <Button
             type="submit"
-            className="shad-button_primary whitespace-nowrap"
+            className="shad-button_primary w-[105px] disabled:bg-secoundarybg whitespace-nowrap"
+            disabled={isPending}
             // disabled={isLoadingCreate || isLoadingUpdate}
           >
+            {isPending ? <Loader /> : " Create Post"}
             {/* {(isLoadingCreate || isLoadingUpdate) && <Loader />}
             {action} Post */}
-            Create Post
           </Button>
         </div>
       </form>

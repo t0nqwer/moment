@@ -3,7 +3,6 @@ import { useSession } from "next-auth/react";
 
 const SideBarDetailSection = () => {
   const { data: session, status } = useSession();
-  console.log(session, "session nav");
 
   return (
     <div className=" select-none w-full rounded-md bg-secoundarybg flex mt-5">
