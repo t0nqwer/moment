@@ -29,7 +29,7 @@ export default async function RootLayout({
       {/* <SessionProvider> */}
       <body className={inter.className}>
         <Provider>
-          <div className="flex h-full grow-0">
+          <div className="flex h-full grow-0 overflow-hidden">
             <SideNavebar />
 
             {children}

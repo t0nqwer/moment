@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 
 import PostCard from "../(components)/PostCard";
+import Loader from "@/components/shared/Loader";
 
 export default function Home() {
   const [page, setPage] = useState(1);
@@ -34,7 +35,6 @@ export default function Home() {
         setLoading(false);
         return;
       }
-
       setPosts((prev: any) => {
         const newdata = [...prev, ...post];
         const unique = newdata.filter(
@@ -47,9 +47,8 @@ export default function Home() {
     };
     loadPost();
   }, [page]);
-
   return (
-    <main className=" flex flex-1 ">
+    <main className=" flex flex-1  overflow-hidden ">
       <div
         className="flex flex-col flex-1 items-center gap-10 overflow-scroll py-10 px-5 md:px-8 lg:p-14 custom-scrollbar"
         onScroll={handleScroll}
@@ -65,7 +64,7 @@ export default function Home() {
               </li>
             ))}
           </ul>
-          {loading && <p>Loading...</p>}
+          {loading && <Loader />}
           {isBottom && <p>End of the line</p>}
         </div>
       </div>
