@@ -1,10 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 
-import PostCard from "../(components)/PostCard";
+import PostCard from "../../components/shared/PostCard";
 import Loader from "@/components/shared/Loader";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [page, setPage] = useState(1);
   const [posts, setPosts] = useState<any>([]);
   const [loading, setLoading] = useState(true);
@@ -28,6 +33,9 @@ export default function Home() {
   };
   useEffect(() => {
     const loadPost = async () => {
+      if (!session && page !== 1) {
+        router.push("/signin");
+      }
       setLoading(true);
       const post: any = await FetchPosts(page);
       if (post.length === 0) {

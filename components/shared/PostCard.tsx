@@ -42,6 +42,32 @@ const PostCard = ({ post }: any) => {
         width={1080}
         height={1080}
       />
+      <div className=" py-5 text-white w-full truncate">
+        <p>
+          <span className="text-[15px] font-medium lg:text-base  ">
+            {post.user.username}{" "}
+          </span>
+          {post.caption.length > 50 ? (
+            <span className=" font-light text-[14px] truncate ">
+              {post.caption.slice(0, 50)}
+              <span className=" text-gray-400 font-light text-[13px]">
+                {" "}
+                ...Read more
+              </span>
+            </span>
+          ) : (
+            <span className=" font-light text-[14px] truncate ">
+              {" "}
+              {post.caption}{" "}
+            </span>
+          )}
+          {post.tag.map((tag: any, index: number) => (
+            <span key={index} className="text-[13px] font-light text-gray-400">
+              #{tag}{" "}
+            </span>
+          ))}
+        </p>
+      </div>
     </div>
   );
 };

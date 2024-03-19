@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, Nunito_Sans } from "next/font/google";
-import SideNavebar from "../(components)/SideNavebar";
+import SideNavebar from "../../components/shared/SideNavebar";
 import "./globals.css";
 // import { SessionProvider } from "next-auth/react";
 // import type { AppProps } from "next/app";
-import Provider from "../(components)/Provider";
+import Provider from "../../components/shared/Provider";
 // import { AuthProvider } from "@/context/AuthContext";
 // import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 // import { getServerSession } from "next-auth";
@@ -31,7 +31,6 @@ export default async function RootLayout({
         <Provider>
           <div className="flex h-full grow-0 overflow-hidden">
             <SideNavebar />
-
             {children}
           </div>
         </Provider>

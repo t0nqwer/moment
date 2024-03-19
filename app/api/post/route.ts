@@ -54,11 +54,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const PostUser = await User.findOne({ email: data.user.user.email }).select(
       "_id"
     );
-    console.log(PostUser, "From CreatePost action");
+    const tags = data.tags.split(",");
+
     const post = new Post({
       caption: data.caption,
       user: PostUser._id,
-      tag: data.tags,
+      tag: tags,
       location: data.location,
     });
     await post.save();

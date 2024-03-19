@@ -1,8 +1,16 @@
-import PostForm from "@/app/(components)/form/PostForm";
+import PostForm from "@/components/shared/form/PostForm";
 import React from "react";
 import Image from "next/image";
 
-const CreatePost = () => {
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
+const CreatePost = async () => {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect("/signin");
+  }
   return (
     <div className="flex flex-1">
       <div className="common-container">
